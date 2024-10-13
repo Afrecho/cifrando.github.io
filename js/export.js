@@ -3,17 +3,15 @@ let listaImagenes = [];
 
 // función para el botón Exportar GIF
 function exportGif() {
-
-
     // contar el número de acordes
     const acordes = document.querySelectorAll('.acorde');
     const numAcordes = acordes.length;
 
-    // Oobtener el BPM ingresado por el usuario
-    const bpm = parseInt(document.getElementById('bpm').value) || 120; // Valor por defecto 120 si no hay entrada
+    // Obtener el BPM ingresado por el usuario
+    const bpm = parseInt(document.getElementById('bpm').value) || 120; // valor por defecto 120 si no hay entrada
 
     // obtener el compás seleccionado
-    const compas = document.getElementById('compas').value || '4/4'; // Valor por defecto 4/4 si no hay selección
+    const compas = document.getElementById('compas').value || '4/4'; // valor por defecto 4/4 si no hay selección
 
     // calculo de milisegundos por compás
     let beatsPerBar;
@@ -31,16 +29,12 @@ function exportGif() {
     const msPerBeat = 60000 / bpm; // 60000 ms en un minuto
     const msPerBar = msPerBeat * beatsPerBar;
 
-
-
     // reiniciar listaImagenes antes de capturar nuevos frames
     listaImagenes = [];
 
     // GENERAR Y GUARDAR EL PNG
     function capturarFrame(index) {
-        if (index >= numAcordes) {
-            // mostrar un alert con el número de frames guardados
-            //alert(`Se guardaron ${listaImagenes.length} frames.`);
+        if (index > numAcordes) {
             return; // finalizar si ya se capturaron todos los frames
         }
 
@@ -53,10 +47,10 @@ function exportGif() {
             ac.classList.add('inactivo');
         });
 
-        // asignar la clase 'activo' solo al acorde actual
-        if (acordes[index]) {
-            acordes[index].classList.remove('inactivo');
-            acordes[index].classList.add('activo');
+        // asignar la clase 'activo' solo al acorde actual, excepto para el frame 0
+        if (index > 0 && acordes[index - 1]) {
+            acordes[index - 1].classList.remove('inactivo');
+            acordes[index - 1].classList.add('activo');
         }
 
         // GENERAR Y GUARDAR EL PNG
@@ -64,25 +58,15 @@ function exportGif() {
             canvas.toBlob(function (blob) {
                 listaImagenes.push(blob);
         
-                // Mostrar alerta con la cantidad de frames cargados
-                
-        
                 // capturar el siguiente frame
                 capturarFrame(index + 1);
             }, 'image/png');
         });
-        
     }
 
-    // iniciar la captura de frames
+    // iniciar la captura de frames, comenzando con el frame 0
     capturarFrame(0);
-
-  // Llamada a la función
-
-
 }
-
-
 
 
 // FUNCION DESCARGAR LA LISTA

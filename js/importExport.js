@@ -1,4 +1,4 @@
-// Valores por defecto para el preset
+// valores por defecto para preset
 const defaultValues = {
     fontFamily: 'Arial, sans-serif',
     fontSize: '18',
@@ -11,12 +11,12 @@ const defaultValues = {
     backgroundColor: 'transparent'
 };
 
-// Capturar todos los valores actuales del formulario y estilos
+// capturar todos los valores actuales del formulario y estilos
 function obtenerValoresActuales() {
     const divCentral = document.getElementById('divCentral');
     
     return {
-        // Valores de los inputs
+        // valores  inputs
         fontFamily: document.getElementById('fontFamily').value || defaultValues.fontFamily,
         fontSize: document.getElementById('fontSize').value || defaultValues.fontSize,
         bgColorActivo: document.getElementById('bgColor').value || defaultValues.bgColorActivo,
@@ -26,13 +26,13 @@ function obtenerValoresActuales() {
         textColorInactivo: document.getElementById('textColorInactive').value || defaultValues.textColorInactivo,
         borderInactivo: document.getElementById('borderInactive').value || defaultValues.borderInactivo,
         
-        // Color de fondo del divCentral
+        // background del divCentral
         backgroundColor: divCentral.style.backgroundColor || defaultValues.backgroundColor,
         backgroundImage: divCentral.style.backgroundImage || ''
     };
 }
 
-// Función para exportar el preset actual
+//  exportar el preset actual
 function exportarPreset() {
     const preset = obtenerValoresActuales();
     const presetString = JSON.stringify(preset, null, 2);
@@ -51,7 +51,7 @@ function exportarPreset() {
     document.getElementById('reporte').innerText = 'Preset exportado exitosamente';
 }
 
-// Función para importar un preset
+//  importar un preset
 function importarPreset() {
     const input = document.createElement('input');
     input.type = 'file';
@@ -77,12 +77,12 @@ function importarPreset() {
     input.click();
 }
 
-// Función para aplicar un preset importado
+//  aplicar un preset importado
 function aplicarPreset(preset) {
     const divCentral = document.getElementById('divCentral');
     const acordes = document.querySelectorAll('.acorde');
 
-    // Aplicar valores a los inputs
+    // aplicar valores a los inputs
     if (preset.fontFamily) {
         document.getElementById('fontFamily').value = preset.fontFamily;
         acordes.forEach(acorde => {
@@ -104,7 +104,7 @@ function aplicarPreset(preset) {
     if (preset.textColorInactivo) document.getElementById('textColorInactive').value = preset.textColorInactivo;
     if (preset.borderInactivo) document.getElementById('borderInactive').value = preset.borderInactivo;
     
-    // Aplicar color de fondo al divCentral
+    // aplicar color de fondo al divCentral
     if (preset.backgroundColor) {
         divCentral.style.backgroundColor = preset.backgroundColor;
     }
@@ -122,18 +122,18 @@ function aplicarPreset(preset) {
     document.documentElement.style.setProperty('--font-family-acorde', preset.fontFamily || defaultValues.fontFamily);
     document.documentElement.style.setProperty('--font-size-acorde', `${preset.fontSize || defaultValues.fontSize}px`);
     
-    // Llamar a applyStyles si existe
+    // llamar a applyStyles si existe
     if (typeof applyStyles === 'function') {
         applyStyles();
     }
 }
 
-// Event Listeners para los botones
+// listeners para los botones
 document.addEventListener('DOMContentLoaded', function() {
     const divCentral = document.getElementById('divCentral');
     const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange'];
     
-    // Botones de colores (1-6)
+    // botones de colores (1-6)
     colors.forEach((color, index) => {
         const button = document.getElementById(`boton${index + 1}`);
         if (button) {
@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Botón de transparencia (7)
+    // botón de transparencia (7)
     const transparentBtn = document.getElementById('boton7');
     if (transparentBtn) {
         transparentBtn.addEventListener('click', () => {
@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Botón de subir imagen de fondo
+    // boton subir imagen de fondo
     const uploadButton = document.getElementById('uploadButton');
     const backgroundImageInput = document.getElementById('backgroundImageInput');
     
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Event listeners para los botones de preset
+    // listeners para los botones de preset
     const importarPresetBtn = document.getElementById('importarPreset');
     const exportarPresetBtn = document.getElementById('exportarPreset');
     
